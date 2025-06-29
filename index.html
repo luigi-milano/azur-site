@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AZUR LOC INVEST - Génération d'annonces par IA</title>
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
     <style>
         * {
             margin: 0;
@@ -46,61 +45,6 @@
             -webkit-text-fill-color: transparent;
         }
 
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .nav-link {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .nav-link:hover {
-            color: #667eea;
-        }
-
-        .auth-buttons {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .btn {
-            padding: 0.8rem 1.5rem;
-            border: none;
-            border-radius: 25px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            text-align: center;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            border: 2px solid #667eea;
-            color: #667eea;
-        }
-
-        .btn-secondary:hover {
-            background: #667eea;
-            color: white;
-        }
-
         .main-content {
             margin-top: 80px;
             padding: 2rem;
@@ -125,8 +69,8 @@
             opacity: 0.9;
         }
 
-        .upload-container {
-            max-width: 800px;
+        .signup-container {
+            max-width: 600px;
             margin: 2rem auto;
             background: rgba(255, 255, 255, 0.95);
             border-radius: 20px;
@@ -135,285 +79,96 @@
             backdrop-filter: blur(10px);
         }
 
-        .login-required {
-            text-align: center;
-            padding: 3rem;
-            background: #f8f9ff;
-            border-radius: 15px;
-            border: 2px dashed #667eea;
-        }
-
-        .upload-section {
-            margin-bottom: 2rem;
-        }
-
-        .section-title {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: #333;
+        .signup-form {
             display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            flex-direction: column;
+            gap: 1rem;
         }
 
-        .upload-zone {
-            border: 3px dashed #667eea;
-            border-radius: 15px;
-            padding: 2rem;
-            text-align: center;
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input, .form-group textarea {
+            padding: 1rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
-            background: #f8f9ff;
+            transition: transform 0.3s ease;
         }
 
-        .upload-zone:hover {
-            background: #f0f2ff;
-            border-color: #5a6fd8;
+        .submit-btn:hover {
+            transform: translateY(-2px);
         }
 
-        .upload-zone.dragover {
-            background: #e8edff;
-            border-color: #4c63d2;
+        .features-section {
+            padding: 4rem 0;
+            background: rgba(255, 255, 255, 0.1);
+            margin: 4rem 0;
         }
 
-        .upload-icon {
+        .features-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 0 2rem;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .feature-icon {
             font-size: 3rem;
             color: #667eea;
             margin-bottom: 1rem;
         }
 
-        .file-input {
-            display: none;
-        }
-
-        .preview-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .preview-item {
-            position: relative;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .preview-image {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-        }
-
-        .remove-btn {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            background: #ff4757;
+        .contact-info {
+            text-align: center;
             color: white;
-            border: none;
-            border-radius: 50%;
-            width: 25px;
-            height: 25px;
-            cursor: pointer;
-            font-size: 0.8rem;
+            margin-top: 3rem;
         }
 
-        .generate-btn {
-            width: 100%;
-            margin-top: 2rem;
-            padding: 1rem;
-            font-size: 1.2rem;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            border: none;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .generate-btn:hover:not(:disabled) {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
-        }
-
-        .generate-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .result-container {
-            margin-top: 2rem;
-            padding: 2rem;
-            background: #f8f9ff;
-            border-radius: 15px;
-            border-left: 5px solid #667eea;
-        }
-
-        .loading {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 1rem;
-            padding: 2rem;
-        }
-
-        .spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #667eea;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .tab-container {
-            display: flex;
-            margin-bottom: 2rem;
-            background: #f0f2ff;
-            border-radius: 10px;
-            padding: 0.5rem;
-        }
-
-        .tab {
-            flex: 1;
-            padding: 1rem;
-            text-align: center;
-            background: transparent;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .tab.active {
-            background: white;
-            color: #667eea;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .tab-content {
+        .success-message {
             display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        .auth-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .auth-modal.show {
-            display: flex;
-        }
-
-        .auth-content {
-            background: white;
-            padding: 2rem;
-            border-radius: 20px;
-            max-width: 400px;
-            width: 90%;
-            text-align: center;
-            position: relative;
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        .form-group {
-            margin-bottom: 1rem;
-            text-align: left;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 0.8rem;
-            border: 2px solid #e1e5e9;
-            border-radius: 8px;
-            font-size: 1rem;
-        }
-
-        .form-group input:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        .google-signin {
-            margin: 1rem 0;
-        }
-
-        .divider {
-            margin: 1rem 0;
-            text-align: center;
-            color: #666;
-            position: relative;
-        }
-
-        .divider::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: #ddd;
-            z-index: 1;
-        }
-
-        .divider span {
-            background: white;
-            padding: 0 1rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        .alert {
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-        }
-
-        .alert-success {
             background: #d4edda;
             color: #155724;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
             border: 1px solid #c3e6cb;
-        }
-
-        .alert-error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
         }
 
         @media (max-width: 768px) {
@@ -421,11 +176,7 @@
                 font-size: 2.5rem;
             }
             
-            .nav-links {
-                display: none;
-            }
-            
-            .upload-container {
+            .signup-container {
                 margin: 1rem;
                 padding: 1rem;
             }
@@ -437,15 +188,6 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="logo">🏠 AZUR LOC INVEST</div>
-            <div class="nav-links">
-                <a href="#" class="nav-link">Accueil</a>
-                <a href="#" class="nav-link">Mes Annonces</a>
-                <a href="#" class="nav-link">Support</a>
-            </div>
-            <div class="auth-buttons" id="auth-buttons">
-                <button class="btn btn-secondary" onclick="showAuth('login')">Connexion</button>
-                <button class="btn btn-primary" onclick="showAuth('register')">Inscription</button>
-            </div>
         </div>
     </nav>
 
@@ -454,274 +196,113 @@
         <!-- Hero Section -->
         <section class="hero-section">
             <h1 class="hero-title">Créez vos annonces immobilières avec l'IA</h1>
-            <p class="hero-subtitle">AZUR LOC INVEST utilise Claude AI pour analyser vos photos et documents immobiliers</p>
+            <p class="hero-subtitle">AZUR LOC INVEST utilise l'intelligence artificielle pour analyser vos photos et documents immobiliers</p>
         </section>
 
-        <!-- Upload Container -->
-        <div class="upload-container">
-            <div id="login-required" class="login-required">
-                <h3>🔐 Connexion requise</h3>
-                <p>Veuillez vous connecter pour accéder à la génération d'annonces IA</p>
-                <button class="btn btn-primary" onclick="showAuth('login')" style="margin-top: 1rem;">Se connecter</button>
+        <!-- Signup Container -->
+        <div class="signup-container">
+            <h2 style="text-align: center; margin-bottom: 2rem; color: #667eea;">Rejoignez AZUR LOC INVEST</h2>
+            
+            <div class="success-message" id="success-message">
+                ✅ Merci ! Votre demande a été envoyée. Nous vous contacterons bientôt !
             </div>
 
-            <div id="upload-interface" style="display: none;">
-                <div class="tab-container">
-                    <button class="tab active" onclick="switchTab('photos')">📸 Photos du bien</button>
-                    <button class="tab" onclick="switchTab('documents')">📄 Titre de propriété</button>
+            <form class="signup-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" onsubmit="handleSubmit(event)">
+                <div class="form-group">
+                    <label for="firstName">Prénom *</label>
+                    <input type="text" id="firstName" name="firstName" required>
                 </div>
 
-                <!-- Photos Tab -->
-                <div class="tab-content active" id="photos-tab">
-                    <div class="upload-section">
-                        <h3 class="section-title">
-                            📸 Importez vos photos (3 minimum)
-                        </h3>
-                        <div class="upload-zone" onclick="document.getElementById('photo-input').click()" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
-                            <div class="upload-icon">📷</div>
-                            <p><strong>Cliquez pour sélectionner</strong> ou glissez-déposez vos photos</p>
-                            <p style="margin-top: 0.5rem; color: #666; font-size: 0.9rem;">JPG, PNG - Max 10MB par photo</p>
-                        </div>
-                        <input type="file" id="photo-input" class="file-input" multiple accept="image/*" onchange="handleFiles(event.target.files, 'photos')">
-                        <div class="preview-container" id="photo-preview"></div>
-                    </div>
+                <div class="form-group">
+                    <label for="lastName">Nom *</label>
+                    <input type="text" id="lastName" name="lastName" required>
                 </div>
 
-                <!-- Documents Tab -->
-                <div class="tab-content" id="documents-tab">
-                    <div class="upload-section">
-                        <h3 class="section-title">
-                            📄 Titre de propriété ou attestation immobilière
-                        </h3>
-                        <div class="upload-zone" onclick="document.getElementById('doc-input').click()" ondrop="handleDocDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
-                            <div class="upload-icon">📋</div>
-                            <p><strong>Cliquez pour sélectionner</strong> ou glissez-déposez votre document</p>
-                            <p style="margin-top: 0.5rem; color: #666; font-size: 0.9rem;">PDF, DOC, DOCX - Max 20MB</p>
-                        </div>
-                        <input type="file" id="doc-input" class="file-input" accept=".pdf,.doc,.docx" onchange="handleFiles(event.target.files, 'documents')">
-                        <div class="preview-container" id="doc-preview"></div>
-                    </div>
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="email" required>
                 </div>
 
-                <button class="generate-btn" onclick="generateListing()" id="generate-btn" disabled>
-                    🤖 Analyser avec Claude AI et générer l'annonce
+                <div class="form-group">
+                    <label for="phone">Téléphone *</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="projectType">Type de projet</label>
+                    <select id="projectType" name="projectType" style="padding: 1rem; border: 2px solid #e1e5e9; border-radius: 10px; font-size: 1rem;">
+                        <option value="">Sélectionnez...</option>
+                        <option value="vente">Vente de bien immobilier</option>
+                        <option value="location">Location de bien immobilier</option>
+                        <option value="investissement">Investissement immobilier</option>
+                        <option value="autre">Autre</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Message (optionnel)</label>
+                    <textarea id="message" name="message" rows="4" placeholder="Décrivez votre projet ou vos besoins..."></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    🚀 Rejoindre la plateforme
                 </button>
+            </form>
+        </div>
 
-                <div class="result-container" id="result-container" style="display: none;">
-                    <h3>🎉 Votre annonce générée par Claude AI :</h3>
-                    <div id="generated-listing"></div>
+        <!-- Features Section -->
+        <section class="features-section">
+            <div class="features-container">
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>Analyse IA des photos</h3>
+                    <p>Notre intelligence artificielle analyse automatiquement vos photos pour décrire chaque détail de votre bien immobilier.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📄</div>
+                    <h3>Extraction des données</h3>
+                    <p>Importez votre titre de propriété et notre IA extrait automatiquement toutes les informations importantes.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Génération instantanée</h3>
+                    <p>Obtenez une annonce professionnelle en quelques secondes, prête à être publiée sur tous les sites immobiliers.</p>
                 </div>
             </div>
+        </section>
+
+        <!-- Contact Info -->
+        <div class="contact-info">
+            <h3>📞 Nous contacter</h3>
+            <p>Email : <strong>contact@azur-loc-invest.com</strong></p>
+            <p>Téléphone : <strong>+33 X XX XX XX XX</strong></p>
+            <p style="margin-top: 1rem; opacity: 0.8;">
+                Plateforme IA en cours de finalisation - Inscrivez-vous pour être notifié du lancement !
+            </p>
         </div>
     </main>
 
-    <!-- Auth Modal -->
-    <div class="auth-modal" id="auth-modal">
-        <div class="auth-content">
-            <button class="close-modal" onclick="hideAuth()">×</button>
-            <h2 id="auth-title">Connexion</h2>
-            
-            <div id="alert-container"></div>
-
-            <!-- Google Sign In -->
-            <div class="google-signin">
-                <div id="g_id_onload"
-                     data-client_id="METTEZ_VOTRE_GOOGLE_CLIENT_ID_ICI"
-                     data-context="signin"
-                     data-ux_mode="popup"
-                     data-callback="handleGoogleSignIn"
-                     data-auto_prompt="false">
-                </div>
-                <div class="g_id_signin"
-                     data-type="standard"
-                     data-shape="rectangular"
-                     data-theme="outline"
-                     data-text="signin_with"
-                     data-size="large"
-                     data-logo_alignment="left">
-                </div>
-            </div>
-
-            <div class="divider">
-                <span>ou</span>
-            </div>
-
-            <!-- Email Form -->
-            <form id="auth-form" onsubmit="handleEmailAuth(event)">
-                <div id="register-fields" style="display: none;">
-                    <div class="form-group">
-                        <label for="firstName">Prénom *</label>
-                        <input type="text" id="firstName" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="lastName">Nom *</label>
-                        <input type="text" id="lastName" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="phone">Téléphone *</label>
-                        <input type="tel" id="phone" required>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="email">Email *</label>
-                    <input type="email" id="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="password">Mot de passe *</label>
-                    <input type="password" id="password" required minlength="6">
-                </div>
-                
-                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
-                    <span id="auth-submit-text">Se connecter</span>
-                </button>
-            </form>
-
-            <p style="margin-top: 1rem; color: #666;">
-                <span id="auth-switch-text">Pas de compte ?</span>
-                <a href="#" onclick="toggleAuthMode()" style="color: #667eea;">
-                    <span id="auth-switch-link">S'inscrire</span>
-                </a>
-            </p>
-        </div>
-    </div>
-
     <script>
-        // Configuration - VOUS DEVEZ MODIFIER CES VALEURS
-        const API_BASE_URL = 'https://votre-backend-url.com/api'; // URL de votre backend
-        const GOOGLE_CLIENT_ID = '566918417043-venfhe55djaumv8c8tmradacehm8996jg.apps.googleusercontent.com'; // Votre Google Client ID
-
-        // État de l'application
-        let currentUser = null;
-        let uploadedPhotos = [];
-        let uploadedDocument = null;
-        let isLoginMode = true;
-
-        // Initialisation
-        document.addEventListener('DOMContentLoaded', function() {
-            showAlert('⚠️ Backend non configuré - Veuillez configurer vos APIs', 'error');
-        });
-
-        // Gestion des onglets
-        function switchTab(tabName) {
-            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-            
-            event.target.classList.add('active');
-            document.getElementById(`${tabName}-tab`).classList.add('active');
-        }
-
-        // Gestion de l'authentification
-        function showAuth(type) {
-            isLoginMode = type === 'login';
-            updateAuthModal();
-            document.getElementById('auth-modal').classList.add('show');
-        }
-
-        function hideAuth() {
-            document.getElementById('auth-modal').classList.remove('show');
-            clearAuthForm();
-        }
-
-        function toggleAuthMode() {
-            isLoginMode = !isLoginMode;
-            updateAuthModal();
-        }
-
-        function updateAuthModal() {
-            const title = document.getElementById('auth-title');
-            const registerFields = document.getElementById('register-fields');
-            const submitText = document.getElementById('auth-submit-text');
-            const switchText = document.getElementById('auth-switch-text');
-            const switchLink = document.getElementById('auth-switch-link');
-
-            if (isLoginMode) {
-                title.textContent = 'Connexion';
-                registerFields.style.display = 'none';
-                submitText.textContent = 'Se connecter';
-                switchText.textContent = 'Pas de compte ?';
-                switchLink.textContent = 'S\'inscrire';
-            } else {
-                title.textContent = 'Inscription';
-                registerFields.style.display = 'block';
-                submitText.textContent = 'S\'inscrire';
-                switchText.textContent = 'Déjà un compte ?';
-                switchLink.textContent = 'Se connecter';
-            }
-        }
-
-        function clearAuthForm() {
-            document.getElementById('auth-form').reset();
-            document.getElementById('alert-container').innerHTML = '';
-        }
-
-        // Authentification Google (nécessite configuration)
-        function handleGoogleSignIn(response) {
-            showAlert('❌ Google OAuth non configuré - Contactez l\'administrateur', 'error');
-        }
-
-        // Authentification par email (nécessite backend)
-        async function handleEmailAuth(event) {
+        function handleSubmit(event) {
             event.preventDefault();
-            showAlert('❌ Backend non configuré - Impossible de s\'authentifier', 'error');
-        }
-
-        // Gestion du drag & drop
-        function handleDragOver(e) {
-            e.preventDefault();
-            e.currentTarget.classList.add('dragover');
-        }
-
-        function handleDragLeave(e) {
-            e.currentTarget.classList.remove('dragover');
-        }
-
-        function handleDrop(e) {
-            e.preventDefault();
-            e.currentTarget.classList.remove('dragover');
-            const files = e.dataTransfer.files;
-            handleFiles(files, 'photos');
-        }
-
-        function handleDocDrop(e) {
-            e.preventDefault();
-            e.currentTarget.classList.remove('dragover');
-            const files = e.dataTransfer.files;
-            handleFiles(files, 'documents');
-        }
-
-        // Gestion des fichiers
-        function handleFiles(files, type) {
-            showAlert('❌ Veuillez d\'abord vous connecter', 'error');
-            showAuth('login');
-        }
-
-        // Génération de l'annonce (nécessite backend + Claude AI)
-        async function generateListing() {
-            showAlert('❌ Claude AI non configuré - Contactez l\'administrateur', 'error');
-        }
-
-        function updateGenerateButton() {
-            const generateBtn = document.getElementById('generate-btn');
-            generateBtn.disabled = true;
-            generateBtn.textContent = '❌ Configuration requise';
-        }
-
-        function showAlert(message, type) {
-            const alertContainer = document.getElementById('alert-container');
-            alertContainer.innerHTML = `
-                <div class="alert alert-${type}">
-                    ${message}
-                </div>
-            `;
             
-            setTimeout(() => {
-                alertContainer.innerHTML = '';
-            }, 5000);
+            // Simuler l'envoi (remplacez par la vraie logique plus tard)
+            document.getElementById('success-message').style.display = 'block';
+            document.querySelector('.signup-form').style.display = 'none';
+            
+            // Scroll vers le message de succès
+            document.getElementById('success-message').scrollIntoView({ behavior: 'smooth' });
+            
+            // Ici vous pouvez ajouter la logique pour envoyer les données
+            console.log('Inscription:', {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                projectType: document.getElementById('projectType').value,
+                message: document.getElementById('message').value
+            });
         }
-
-        // Initialiser l'état du bouton
-        updateGenerateButton();
     </script>
 </body>
 </html>
